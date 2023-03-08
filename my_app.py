@@ -1,4 +1,5 @@
 import flask
+from constants import restaurants
 
 # Setup
 app = flask.Flask("my_app")
@@ -11,6 +12,14 @@ def get_html(page_name):
     html_file.close()
     return content
 
+# Create restaurant images
+def create_restaurants_images():
+    restaurants_images = ''
+    class_name = "restaurant_image"
+    for restaurant in restaurants:
+        restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
+    return restaurant_images
+
 # Routes
 # Route to login page
 @app.route("/login")
@@ -22,4 +31,11 @@ def login():
 @app.route("/")
 def homepage():
     html_content = get_html("index")
-    return html_content.replace("$$RES$$", "restaurant_imgs")
+    restaurant_imgs = create_restaurants_images()
+    return html_content.replace("$$RES$$", restaurant_imgs)
+
+# Route to restaurant page
+@app.route("/<restaurant_name>")
+def restaurant(restaurant_name):
+    html_content = get_html("restaurant")
+    return render_template("restaurant.html", restaurant_name=restaurant_name)
