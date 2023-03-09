@@ -3,16 +3,6 @@ import constants
 
 # Setup
 app = flask.Flask("my_app")
-constants.restaurant_model.add_new_restaurant(
-    name="Mcdonalds",
-    img_src="static/images/Mcdonalds.png",
-    menu=menu
-    )
-constants.restaurant_model.menu_item_model.add_menu_item(
-    name="Salad",
-    price=30.00,
-    restaurant_name="Mcdonalds"
-    )
 
 # Functions
 # Get the content of the webpage
@@ -26,7 +16,7 @@ def get_html(page_name):
 def create_restaurants_images():
     restaurants_images = ''
     class_name = "restaurant_image"
-    for restaurant in restaurants:
+    for restaurant in constants.restaurants:
         restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
     return restaurants_images
 
@@ -48,4 +38,4 @@ def homepage():
 @app.route("/<restaurant_name>")
 def restaurant(restaurant_name):
     html_content = get_html("restaurant")
-    return render_template("restaurant.html", restaurant_name=restaurant_name)
+    return flask.render_template("restaurant.html", restaurant_name=restaurant_name)
