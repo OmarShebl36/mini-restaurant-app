@@ -16,6 +16,7 @@ menu_item_price = 0
 stay = True
 
 # Implementation
+# Take input till the using q
 while True:
     answer = input("What do you want to do? \n(r for adding a new restaurant, m for adding a new menu item, q to quit):\n")
     match answer:
@@ -35,17 +36,21 @@ while True:
                     img_src=restaurant_img_name,
                     )
             except:
+                # If choosen wrong image src
                 print("The image is not available. Please try another.")
                 continue
         case 'm':
             menu_item_name = input("Menu item name: ")
             try:
+                # If entered a non numeric value
                 menu_item_price = float(input("Menu item price: "))
                 print("Which restaurant do you want to add the menu item to? ")
+                # Loop over the restaurants to let the user choose the targeted restaurant using the ids
                 with open('static/csv_files/restaurants.csv', newline='') as f:
                     reader = csv.DictReader(f)
                     for line in reader:
                         print(f"Choose {line['id']} for adding to {line['name']}")
+                # Get the choice and add the item to it
                 choice = input("")
                 for res in restaurants:
                     if res.id == choice:
@@ -60,10 +65,13 @@ while True:
                 print("Invalid value! Please use numbers for the menu item prices.")
                 continue
         case 'q':
+            # Close the app
             break
         case _:
+            # Incase entered an invalid value
             print("Invalid value! Please try again.")
             boolean = True
+            # Choose to try again or close
             while boolean:
                 answer = input("Try again? (y/n): ")
                 if answer == "n":
