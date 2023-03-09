@@ -1,8 +1,18 @@
 import flask
-from constants import restaurants
+import constants
 
 # Setup
 app = flask.Flask("my_app")
+constants.restaurant_model.add_new_restaurant(
+    name="Mcdonalds",
+    img_src="static/images/Mcdonalds.png",
+    menu=menu
+    )
+constants.restaurant_model.menu_item_model.add_menu_item(
+    name="Salad",
+    price=30.00,
+    restaurant_name="Mcdonalds"
+    )
 
 # Functions
 # Get the content of the webpage
@@ -18,7 +28,7 @@ def create_restaurants_images():
     class_name = "restaurant_image"
     for restaurant in restaurants:
         restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
-    return restaurant_images
+    return restaurants_images
 
 # Routes
 # Route to login page

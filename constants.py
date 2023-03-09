@@ -1,4 +1,4 @@
-from restaurant_model import Restaurant
-from menu_item_model import Restaurant
+import restaurant_model
 
-restaurants = Restaurant.read_restaurants()
+restaurants = restaurant_model.Restaurant.read_restaurants()
+menu = Menu_item.read_menu_items("Mcdonalds")

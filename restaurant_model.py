@@ -1,3 +1,4 @@
+import menu_item_model
 import csv
 
 # Setup
@@ -6,7 +7,7 @@ class Restaurant:
         self.name = name
         self.img_src = img_src
         self.id = id
-        self.menu = Menu_item()
+        self.menu = menu
 
     # Read restaurants from the csv file
     # This code is written with the help of the documentation
@@ -42,25 +43,32 @@ class Restaurant:
                     )
             return restaurants
      
-# Add the object to the restaurant csv file   
+# Add the object to the restaurant csv file 
+# This code is written with the help of the documentation and chatgpt  
 def add_to_file(restaurant):
-        with open("static/csv_files/restaurants.csv", 'a', newline='') as f:
-            field_names = [name, img_src, id, menu]
-            csv_writer = csv.DictWriter(f, fieldnames=field_names)
-            csv_writer.writeheader()
-            csv_writer.writerow(
-                {'name' : restaurant.name},
-                {'img_src' : restaurant.img_src},
-                {'id'   : restaurant.id},
-                {'menu' : restaurant.menu}
-                )
+    field_names = ["name", "img_src", "id", "menu"]
+    with open("static/csv_files/restaurants.csv", 'r', newline='') as f:
+        csv_reader = csv.DictReader(f, fieldnames=field_names)
+        for row in csv_reader:
+            if row['name'] == restaurant.name:
+                return
             
-# Creare a restaurant
+    with open("static/csv_files/restaurants.csv", 'a', newline='') as f:
+        csv_writer = csv.DictWriter(f, fieldnames=field_names)
+        csv_writer.writerow(
+        {
+            'name' : restaurant.name,
+            'img_src' : restaurant.img_src,
+            'id'   : restaurant.id,
+            'menu' : restaurant.menu
+        })
+
+# Create a restaurant
 def add_new_restaurant(name, img_src, menu):
-    restaurants = read_restaurants()
+    restaurants = Restaurant.read_restaurants()
     id = len(restaurants)
     new_restaurant = Restaurant(name=name, img_src=img_src, menu=menu, id=id)
     add_to_file(new_restaurant)
-    
+
 # Build the restaurants list
-add_new_restaurant("Mcdonalds", "static/images/Mcdonalds.png", )
+menu = Menu_item.read_menu_items("Mcdonalds")
