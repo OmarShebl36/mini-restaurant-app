@@ -4,11 +4,11 @@ from menu_item_model import Menu_item
 # Setup
 class Restaurant:
     
-    def __init__(self, name, img_src):
+    def __init__(self, name, img_src, id=0, menu=[]):
         self.name = name
         self.img_src = img_src
-        self.id = 0
-        self.menu = []
+        self.id = id
+        self.menu = menu
 
     # Read restaurants from the csv file
     # This code is written with the help of the documentation
@@ -22,6 +22,8 @@ class Restaurant:
                     Restaurant(
                         row['name'],
                         row['img_src'],
+                        row['id'],
+                        list(row['menu']),
                         )
                     )
             return restaurants

@@ -17,7 +17,11 @@ def create_restaurants_images():
     restaurants_images = ''
     class_name = "restaurant_image"
     for restaurant in constants.restaurants:
-        restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
+        print(restaurant.id)
+        if (int(restaurant.id) + 1) % 4 == 0:
+            restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}><br>"
+        else:
+            restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
     return restaurants_images
 
 # Routes
