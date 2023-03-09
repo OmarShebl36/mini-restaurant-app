@@ -1,6 +1,5 @@
 name,price,restaurant_name,id
 Salad,30.0,Mcdonalds,0
-Salad,30.0,Buffalo,0
-Burger,50.0,mc,0
-Burger,50.0,mcd,0
-Burger,50.0,mcds,0
+Salad,30.0,Buffalo,1
+Can,10.0,Mcdonalds,2
+Ice cream,10.0,Mcdonalds,3
