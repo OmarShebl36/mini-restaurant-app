@@ -28,23 +28,6 @@ class Restaurant:
                     )
             return restaurants
     
-    # # Read the menu items from the file
-    # def read_menu_items(self):
-    #     with open("static/csv_files/menu_items.csv", newline='') as f:
-    #         reader = csv.DictReader(f)
-    #         menu_items = []
-    #         for row in reader:
-    #             if self.name == row['restaurant_name']:
-    #                 menu_items.append(
-    #                     Menu_item(
-    #                         name=row['name'],
-    #                         price=row['price'],
-    #                         restaurant_name=row['restaurant_name'],
-    #                         id=row['id'],
-    #                         )
-    #                 )
-    #         return menu_items
-    
     # Get the restaurant's menu items
     def get_menu_items(self):
         with open("static/csv_files/menu_items.csv", newline='') as f:
@@ -64,12 +47,17 @@ class Restaurant:
 # This code is written with the help of the documentation and chatgpt  
 def add_to_file(restaurant):
     field_names = ["name", "img_src", "id", "menu"]
-    with open("static/csv_files/restaurants.csv", 'r', newline='') as f:
-        csv_reader = csv.DictReader(f, fieldnames=field_names)
-        for row in csv_reader:
-            if row['name'] == restaurant.name:
-                return
-            
+    # Check if the restaurant is already in the file
+    try:
+        with open("static/csv_files/restaurants.csv", 'r', newline='') as f:
+            csv_reader = csv.DictReader(f, fieldnames=field_names)
+            for row in csv_reader:
+                if row['name'] == restaurant.name:
+                    return
+    except FileNotFoundError:
+        print("File not found")
+
+    # Add the restaurant
     with open("static/csv_files/restaurants.csv", 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
