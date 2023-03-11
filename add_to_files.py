@@ -4,7 +4,7 @@ from constants import restaurants
 import csv
 
 """
-This file is made for a development purpose.
+This app is made for a development purpose.
 It can be used to add new restaurants and menu items.
 """
 

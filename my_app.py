@@ -25,9 +25,9 @@ def create_restaurants_images():
         if (int(restaurant.id) + 1) % 4 == 0:
             
             # After diplaying 4 images, create a new line.
-            restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}><br>"
+            restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} width="200" height="200"><br>'
         else:
-            restaurants_images += f"<img src={restaurant.img_src} class={class_name} id={restaurant.id}>"
+            restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} width="200" height="200">'
     return restaurants_images
 
 # Routes
@@ -41,11 +41,25 @@ def login():
 @app.route("/")
 def homepage():
     html_content = get_html("index")
+    # Generate the restaurants clickable images
     restaurant_imgs = create_restaurants_images()
+    
+    global clicked_restaurant_id
+    global clicked_restaurant
+    clicked_restaurant_id = flask.request.args.get("restaurant_id") if flask.request.args.get("restaurant_id") != None else -1
+    if clicked_restaurant_id != -1:
+        print(clicked_restaurant_id)
+        for restaurant in constants.restaurants:
+            if restaurant.id == clicked_restaurant_id:
+                clicked_restaurant = restaurant
+                print(clicked_restaurant.name)
+                html_content = get_html("restaurant")
+                return html_content.replace("$$MENU$$", "Menu item").replace("$$REST$$", clicked_restaurant.name)
+                
     return html_content.replace("$$RES$$", restaurant_imgs)
 
 # Route to restaurant page
-@app.route("/<restaurant_name>")
-def restaurant(restaurant_name):
+@app.route("/restaurant")
+def restaurant():
     html_content = get_html("restaurant")
-    return flask.render_template("restaurant.html", restaurant_name=restaurant_name)
+    return html_content.replace("$$MENU$$", "Menu item").replace("$$REST$$", clicked_restaurant.name)
