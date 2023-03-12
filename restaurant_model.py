@@ -23,7 +23,6 @@ class Restaurant:
                         row['name'],
                         row['img_src'],
                         row['id'],
-                        list(row['menu']),
                         )
                     )
             return restaurants

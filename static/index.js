@@ -1,6 +1,7 @@
 // Setup
 let id = 0;
 let isFound = false;
+let restaurantId = 0;
 
 // Get userName parameter value
 const urlParams = new URL(window.location.toString()).searchParams;
@@ -65,16 +66,13 @@ if (userName != "" && userName != null) {
     sessionStorage.setItem(welcomeHeader.innerText, true);
 }
 
-for (let i = 0, n = images.length; i < n; i++) {
-
-    images[i].addEventListener("click", function () {
-    // Get the current URL
-    let url = window.location.href;
-    // Check if the parameter is present
-    if (url.indexOf("?") === -1) {
-        // If the parameter is not present, add it and reload the page
-        let newUrl = url + `?restaurant_id=${images[i].id}`;
-        window.history.pushState({path:newUrl},'',newUrl);
-        window.location.reload();
-    }
-});}
+function submitForm(imageId) {
+    window.location.reload();
+    let myForm = document.getElementById("myForm");
+    let imageIdField = document.getElementById("imageId");
+    myForm.style.display = "none";
+    imageIdField.name = "restaurant_id";
+    imageIdField.value = imageId;
+    myForm.id = "restaurantForm";
+    myForm.submit();
+}
