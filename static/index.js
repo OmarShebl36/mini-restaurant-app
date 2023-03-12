@@ -62,10 +62,12 @@ if (userName != "" && userName != null) {
         welcomeDiv.style.textAlign = "left";
     }
 
-    // Set the current header as visited before
+    // Set the current header as visited before.
     sessionStorage.setItem(welcomeHeader.innerText, true);
 }
 
+// When an image is clicked, go to its restaurant.
+// The reload is required to find the elements when going back to the page.
 function submitForm(imageId) {
     window.location.reload();
     let myForm = document.getElementById("myForm");

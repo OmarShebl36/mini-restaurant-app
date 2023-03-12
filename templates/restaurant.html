@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{restarant}}</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <h1>
+{{restaurant}}
+    </h1>
+    <div id="menu_items">
+        {% for item in items %}
+            <div class="menu-item" id="{{ item.id }}">
+                <h2 class="{{ item_name }}">{{ item.name }}</h2>
+                <h3 class="{{  item_price  }}">{{  item.price  }} EGP</h3>
+                <button id="{{item.id}}_minus_button" class="minus_button" onclick=decrease({{item.id}})>-</button>
+                <h1 class="selected_counter" id="{{item.id}}_selected_counter">0</h1>
+                <button id="{{item.id}}_plus_button" class="plus_button" onclick=increase({{item.id}})>+</button>
+            </div><br>
+        {% endfor %}
+        <script>
+            // Increase the item counter.
+            function increase(itemId) {
+                let selected_item_counter = document.getElementById(itemId + "_selected_counter");
+                let value = parseInt(selected_item_counter.innerText);
+                value++;
+                selected_item_counter.innerText = value.toString();
+                sessionStorage.setItem(itemId + "_selected_counter", value.toString());
+            }
+            // Decrease the item counter, if it's not zero.
+            function decrease(itemId) {
+                let selected_item_counter = document.getElementById(itemId + "_selected_counter");
+                let value = parseInt(selected_item_counter.innerText);
+                if (value > 0) {
+                    value--;
+                    selected_item_counter.innerText = value.toString();
+                    sessionStorage.setItem(itemId + "_selected_counter", value.toString());
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

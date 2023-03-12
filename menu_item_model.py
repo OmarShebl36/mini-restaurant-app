@@ -9,7 +9,6 @@ class Menu_item:
         self.id = id
         self.price = price
         self.restaurant_name = restaurant_name
-        self.selected_counter = 0
     
 # Add new items to menu_items file
 def add_to_file(name, price, restaurant_name, id,):

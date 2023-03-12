@@ -1,0 +1,48 @@
+h1 {
+    color: rgb(179, 13, 13);
+}
+
+a {
+    padding: 10px;
+    text-decoration: none;
+    color: crimson;
+}
+
+body {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: crimson;
+    padding: 10px;
+}
+/* 
+#welcome_body {
+    padding-left: 0px;
+}
+
+.welcome {
+    padding: 20px;
+}
+
+.background {
+    padding: 40px;
+    background-color: #2e1717;
+} */
+
+hr {
+    color: crimson;
+}
+
+header {
+    margin: 50px;
+    border: crimson 2px solid;
+}
+
+input {
+    margin: 10px;
+}
+/* 
+#username_header {
+    padding: 50px;
+    color: white;
+    margin: 0 auto;
+} */
