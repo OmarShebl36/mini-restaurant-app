@@ -1,7 +1,9 @@
 import flask
-from constants import restaurants, restaurant_model
+from restaurant_model import Restaurant 
+
 # Setup
 app = flask.Flask("my_app")
+restaurants = Restaurant.read_restaurants()
 
 # Functions
 # Create restaurant images
@@ -42,12 +44,12 @@ def homepage():
     # Display the restaurants clickable images
     return content.replace("$$RES$$", restaurant_imgs)
 
-# Route to restaurant page
+# Route to restaurant page and show its menu
 @app.route("/restaurant")
 def restaurant():
     global clicked_restaurant
     clicked_restaurant_id = -1
-    clicked_restaurant = restaurant_model.Restaurant("name", "img_src")
+    clicked_restaurant = Restaurant("name", "img_src")
     # Check the parameters for the restaurant_id parameter.
     # If found, save it. If not, do nothing.
     clicked_restaurant_id = flask.request.args.get("restaurant_id") if flask.request.args.get("restaurant_id") != None else -1
@@ -60,3 +62,8 @@ def restaurant():
                 clicked_restaurant.get_menu_items()
 
     return flask.render_template('restaurant.html', items=clicked_restaurant.menu, restaurant=clicked_restaurant.name)
+
+# Route to checkout and send the menu items of the selected restaurant
+@app.route('/checkout')
+def checkout():
+    return flask.render_template('checkout.html', items=clicked_restaurant.menu)

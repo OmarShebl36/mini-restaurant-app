@@ -63,9 +63,8 @@ if (userName != "" && userName != null) {
         isFound = userExists();
         if (!isFound) {
             createUser();
-    }
-}
-
+        }
+    } 
 } else if (userName === "" || userName === null) {
     // This condition checks the user didn't enter the username or opened for the home page directly
     // Display welcome, visitor header and a login link if it's the first time the user opens the page

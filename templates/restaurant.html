@@ -13,14 +13,20 @@
     </h1>
     <div id="menu_items">
         {% for item in items %}
-            <div class="menu-item" id="{{ item.id }}">
-                <h2 class="{{ item_name }}">{{ item.name }}</h2>
-                <h3 class="{{  item_price  }}">{{  item.price  }} EGP</h3>
-                <button id="{{item.id}}_minus_button" class="minus_button" onclick=decrease({{item.id}})>-</button>
-                <h1 class="selected_counter" id="{{item.id}}_selected_counter">0</h1>
-                <button id="{{item.id}}_plus_button" class="plus_button" onclick=increase({{item.id}})>+</button>
+            <div class="menu-item" id="{{ item.id }}_menu">
+                <h2 class="item_name" id="{{item.id}}_name">{{ item.name }}</h2>
+                <h3 class="item_price" id="{{item.id}}_price">{{  item.price  }} EGP</h3>
+                <button id="{{ item.id }}_minus_button" class="minus_button" onclick=decrease({{ item.id }})>-</button>
+                <h1 class="selected_counter" id="{{ item.id }}_selected_counter">0</h1>
+                <button id="{{ item.id }}_plus_button" class="plus_button" onclick=increase({{ item.id }})>+</button>
             </div><br>
+        
         {% endfor %}
+    </div>
+    <div id="submitItemsDiv"> 
+        <form action="/checkout" method="get">
+            <input type="submit" value="Go to Checkout">
+        </form>
     </div>
     <script src="static/restaurant.js"></script>
 </body>
