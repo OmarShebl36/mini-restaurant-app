@@ -1,5 +1,5 @@
 import flask
-from constants import restaurants, restaurant_model, selected_items
+from constants import restaurants, restaurant_model
 # Setup
 app = flask.Flask("my_app")
 

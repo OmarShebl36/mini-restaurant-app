@@ -14,6 +14,10 @@ const welcomeHeader = document.getElementById("welcomeHeader");
 // Get restaurant images' elements
 const images = document.getElementsByClassName("restaurant_image");
 
+// Store the welcoming messages
+let welcomeBack = sessionStorage.getItem("Welcome back, " + userName);
+let welcome = sessionStorage.getItem("Welcome, " + userName);
+
 
 // Functions
 // Add new userName to the local storage and display welcome message
@@ -35,37 +39,6 @@ function userExists() {
     }
 }
 
-// Implementations
-// Create local storage or display user found function
-if (userName != "" && userName != null) {
-    isFound = userExists();
-    if (!isFound) {
-        createUser();
-    }
-} else if (userName == "" || userName == null) {
-
-    // This condition checks the user didn't enter the username or opened for the home page directly
-    // Display welcome, visitor header and a login link if it's the first time the user opens the page
-    welcomeHeader.innerText = "Welcome, visitor";
-    const loginLink = document.createElement("a");
-    loginLink.innerText = "Login";
-    loginLink.href = "/login";
-    welcomeDiv.appendChild(loginLink);
-
-    // The session storage used to check if the user open the page before or not
-    // If it's not the first time, display login link and hide the header
-    let welcomeBack = sessionStorage.getItem("Welcome back, " + userName);
-    let welcome = sessionStorage.getItem("Welcome, " + userName);
-    let welcomeVisitor = sessionStorage.getItem("Welcome, visitor");
-    if (welcomeBack == null && welcome == null && welcomeVisitor != null) {
-        welcomeHeader.style.display = "none";
-        welcomeDiv.style.textAlign = "left";
-    }
-
-    // Set the current header as visited before.
-    sessionStorage.setItem(welcomeHeader.innerText, true);
-}
-
 // When an image is clicked, go to its restaurant.
 // The reload is required to find the elements when going back to the page.
 function submitForm(imageId) {
@@ -77,4 +50,39 @@ function submitForm(imageId) {
     imageIdField.value = imageId;
     myForm.id = "restaurantForm";
     myForm.submit();
+}
+
+// Implementations
+// Create local storage or display user found function if it's the first time to visit the home page
+if (userName != "" && userName != null) {
+    
+    if ((welcomeBack !== null || welcome !== null) && document.referrer != "/login") {
+        welcomeHeader.style.display = "none";
+        welcomeDiv.style.textAlign = "left";
+    } else {
+        isFound = userExists();
+        if (!isFound) {
+            createUser();
+    }
+}
+
+} else if (userName === "" || userName === null) {
+    // This condition checks the user didn't enter the username or opened for the home page directly
+    // Display welcome, visitor header and a login link if it's the first time the user opens the page
+    welcomeHeader.innerText = "Welcome, visitor";
+    const loginLink = document.createElement("a");
+    loginLink.innerText = "Login";
+    loginLink.href = "/login";
+    welcomeDiv.appendChild(loginLink);
+
+    // The session storage used to check if the user open the page before or not
+    // If it's not the first time, display login link and hide the header
+    let welcomeVisitor = sessionStorage.getItem("Welcome, visitor");
+    if (welcomeBack == null && welcome == null && welcomeVisitor != null) {
+        welcomeHeader.style.display = "none";
+        welcomeDiv.style.textAlign = "left";
+    }
+
+    // Set the current header as visited before.
+    sessionStorage.setItem(welcomeHeader.innerText, true);
 }

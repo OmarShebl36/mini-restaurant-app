@@ -25,7 +25,14 @@
             
             // Increase the item counter.
             function increase(itemId) {
-                console.log("Added");
+
+                // Gets the highest item id we used in the session storage
+                if (sessionStorage.getItem("highestId") === null) {
+                    sessionStorage.setItem("highestId", itemId);
+                } else if (parseInt(sessionStorage.getItem("highestId")) < itemId) {
+                    sessionStorage.setItem("highestId", itemId);
+                }
+
                 let selected_item_counter = document.getElementById(itemId + "_selected_counter");
                 let value = parseInt(selected_item_counter.innerText);
                 value++;
@@ -34,7 +41,6 @@
             }
             // Decrease the item counter, if it's not zero.
             function decrease(itemId) {
-                console.log("Removed");
                 let selected_item_counter = document.getElementById(itemId + "_selected_counter");
                 let value = parseInt(selected_item_counter.innerText);
                 if (value > 0) {
@@ -49,10 +55,9 @@
                 }
             }
             // The following code is written with the help of ChatGPT
-            // It clears the selected items from the session storage
+            // It clears the selected items from the session storage when the user leaves the page
             window.addEventListener('beforeunload', function(event) {
-                console.log("Navigated");
-                    for (let i = 0, n = sessionStorage.length; i < n; i++) {
+                    for (let i = 0, n = parseInt(sessionStorage.getItem("highestId")); i <= n; i++) {
                         if (sessionStorage.getItem(i + "_selected_counter")) {
                             sessionStorage.removeItem(i + "_selected_counter");
                         }
