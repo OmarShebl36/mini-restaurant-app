@@ -1,6 +1,5 @@
 import flask
-import constants
-
+from constants import restaurants, restaurant_model, selected_items
 # Setup
 app = flask.Flask("my_app")
 
@@ -11,7 +10,7 @@ def create_restaurants_images():
     
     # Give the restaurant images class name to work with it in JS scripts
     class_name = "restaurant_image"
-    for restaurant in constants.restaurants:
+    for restaurant in restaurants:
         
         # Controls the display of the images.
         # We added 1 to the id as the ids starts with 0.
@@ -48,17 +47,16 @@ def homepage():
 def restaurant():
     global clicked_restaurant
     clicked_restaurant_id = -1
-    clicked_restaurant = constants.restaurant_model.Restaurant("name", "img_src")
+    clicked_restaurant = restaurant_model.Restaurant("name", "img_src")
     # Check the parameters for the restaurant_id parameter.
     # If found, save it. If not, do nothing.
     clicked_restaurant_id = flask.request.args.get("restaurant_id") if flask.request.args.get("restaurant_id") != None else -1
 
     # If the parameter is found get the restaurant by its id.
     if clicked_restaurant_id != -1:
-        for restaurant in constants.restaurants:
+        for restaurant in restaurants:
             if restaurant.id == clicked_restaurant_id:
                 clicked_restaurant = restaurant
-                clicked_restaurant.menu.clear()
                 clicked_restaurant.get_menu_items()
 
     return flask.render_template('restaurant.html', items=clicked_restaurant.menu, restaurant=clicked_restaurant.name)

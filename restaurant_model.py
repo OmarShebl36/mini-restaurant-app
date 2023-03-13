@@ -29,6 +29,7 @@ class Restaurant:
     
     # Get the restaurant's menu items
     def get_menu_items(self):
+        self.menu.clear()
         with open("static/csv_files/menu_items.csv", newline='') as f:
             reader = csv.DictReader(f)
             for row in reader:

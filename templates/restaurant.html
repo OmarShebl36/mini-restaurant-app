@@ -22,8 +22,10 @@
             </div><br>
         {% endfor %}
         <script>
+            
             // Increase the item counter.
             function increase(itemId) {
+                console.log("Added");
                 let selected_item_counter = document.getElementById(itemId + "_selected_counter");
                 let value = parseInt(selected_item_counter.innerText);
                 value++;
@@ -32,14 +34,30 @@
             }
             // Decrease the item counter, if it's not zero.
             function decrease(itemId) {
+                console.log("Removed");
                 let selected_item_counter = document.getElementById(itemId + "_selected_counter");
                 let value = parseInt(selected_item_counter.innerText);
                 if (value > 0) {
                     value--;
                     selected_item_counter.innerText = value.toString();
-                    sessionStorage.setItem(itemId + "_selected_counter", value.toString());
+                    if (value > 0) {
+                        sessionStorage.setItem(itemId + "_selected_counter", value.toString());
+                    }
+                    else if (sessionStorage.getItem(itemId + "_selected_counter") != null) {
+                        sessionStorage.removeItem(itemId + "_selected_counter");
+                    }
                 }
             }
+            // The following code is written with the help of ChatGPT
+            // It clears the selected items from the session storage
+            window.addEventListener('beforeunload', function(event) {
+                console.log("Navigated");
+                    for (let i = 0, n = sessionStorage.length; i < n; i++) {
+                        if (sessionStorage.getItem(i + "_selected_counter")) {
+                            sessionStorage.removeItem(i + "_selected_counter");
+                        }
+                    }
+            });
         </script>
     </div>
 </body>
