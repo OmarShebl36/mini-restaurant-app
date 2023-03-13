@@ -58,5 +58,7 @@ def restaurant():
         for restaurant in constants.restaurants:
             if restaurant.id == clicked_restaurant_id:
                 clicked_restaurant = restaurant
+                clicked_restaurant.menu.clear()
+                clicked_restaurant.get_menu_items()
 
     return flask.render_template('restaurant.html', items=clicked_restaurant.menu, restaurant=clicked_restaurant.name)

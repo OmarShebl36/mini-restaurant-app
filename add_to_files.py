@@ -29,7 +29,7 @@ while True:
                 # Create a restaurant
                 restaurant = restaurant_model.Restaurant(restaurant_name, restaurant_img_name)
                 # Get restaurant's menu items
-                restaurant.get_menu_items()
+                # restaurant.get_menu_items()
                 # Create a restaurant instance
                 restaurant_model.add_new_restaurant(
                     name=restaurant_name,
