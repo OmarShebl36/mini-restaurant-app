@@ -39,6 +39,7 @@ submitCheckout.addEventListener('click', () => {
         checkoutForm.action = "/success";
     }
     for (let i = 0; i <= n; i++) {
+        sessionStorage.removeItem(`${i}_restaurant_name`);
         sessionStorage.removeItem(`${i}_selected_counter`);
         sessionStorage.removeItem(`${i}_name`);
         sessionStorage.removeItem(`${i}_price`);

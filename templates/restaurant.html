@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <h1>
+    <h1 id="selected_restarant_name_header">
 {{restaurant}}
     </h1>
     <div id="menu_items">
@@ -20,7 +20,6 @@
                 <h1 class="selected_counter" id="{{ item.id }}_selected_counter">0</h1>
                 <button id="{{ item.id }}_plus_button" class="plus_button" onclick=increase({{ item.id }})>+</button>
             </div><br>
-        
         {% endfor %}
     </div>
     <div id="submitItemsDiv"> 
@@ -28,6 +27,19 @@
             <input type="submit" id="submit_selected_items" value="Go to Checkout">
         </form>
     </div>
+    <script>
+        // When the page gets opened clear the selected items found in the session storage
+        let highest = sessionStorage.getItem("highestId") !== null ? sessionStorage.getItem("highestId") : -1;
+        for (let i = 0; i <= highest; i++) {
+            if (sessionStorage.getItem(`${i}_selected_counter`)!== null) {
+                sessionStorage.removeItem(`${i}_selected_counter`);
+                sessionStorage.removeItem(`${i}_name`);
+                sessionStorage.removeItem(`${i}_price`);
+                sessionStorage.removeItem(`${i}_restaurant_name`);
+            }
+        }
+        sessionStorage.removeItem("highestId");
+    </script>
     <script src="static/restaurant.js"></script>
 </body>
 </html>

@@ -9,17 +9,20 @@ function increase(itemId) {
         sessionStorage.setItem("highestId", itemId);
     }
 
-    // Increase the selected item's counter and save it in the session storage
+    // Increase the selected item's counter and save its data in the session storage
     let selectedItemCounter = document.getElementById(`${itemId}_selected_counter`);
     let value = parseInt(selectedItemCounter.innerText);
+    const itemName = document.getElementById(`${itemId}_name`);
+    const itemPrice = document.getElementById(`${itemId}_price`);
+    const selectedRestarantName = document.getElementById(`selected_restarant_name_header`);
+
     value++;
     selectedItemCounter.innerText = value.toString();
-    sessionStorage.setItem(`${itemId}_selected_counter`, value.toString());
-    const itemName = document.getElementById(`${itemId}_name`);
-    sessionStorage.setItem(`${itemId}_name`, itemName.innerText);
-    const itemPrice = document.getElementById(`${itemId}_price`);
-    sessionStorage.setItem(`${itemId}_price`, itemPrice.innerText);
 
+    sessionStorage.setItem(`${itemId}_selected_counter`, value.toString());
+    sessionStorage.setItem(`${itemId}_name`, itemName.innerText);
+    sessionStorage.setItem(`${itemId}_price`, itemPrice.innerText);
+    sessionStorage.setItem(`${itemId}_restaurant_name`, selectedRestarantName.innerText);
 }
 
 // Decrease the item counter, if it's not zero.
@@ -38,6 +41,8 @@ function decrease(itemId) {
             sessionStorage.removeItem(`${itemId}_selected_counter`);
             sessionStorage.removeItem(`${itemId}_name`);
             sessionStorage.removeItem(`${itemId}_price`);
+            sessionStorage.removeItem(`${itemId}_restaurant_name`);
+
 
             // Gets the next highest item id in the session storage
             if (sessionStorage.getItem("highestId") == itemId && value == 0) {
