@@ -11,12 +11,13 @@ const userName = urlParams.get("username");
 const welcomeDiv = document.getElementById("welcomeDiv");
 const welcomeHeader = document.getElementById("welcomeHeader");
 
-// Get restaurant images' elements
-const images = document.getElementsByClassName("restaurant_image");
-
 // Store the welcoming messages
 let welcomeBack = sessionStorage.getItem("Welcome back, " + userName);
 let welcome = sessionStorage.getItem("Welcome, " + userName);
+
+
+// Get restaurant images' elements
+const images = document.getElementsByClassName("restaurant_image");
 
 
 // Functions
@@ -54,12 +55,18 @@ function submitForm(imageId) {
 
 // Implementations
 // Create local storage or display user found function if it's the first time to visit the home page
-if (userName != "" && userName != null) {
-    
-    if ((welcomeBack !== null || welcome !== null) && document.referrer != "/login") {
+if (userName !== "" && userName !== null) {
+    // If the user came back to home page show his name in the top left
+    if (welcomeBack !== null || welcome !== null) {
         welcomeHeader.style.display = "none";
+        const userProfile = document.createElement("h3");
+        userProfile.innerText = userName;
+        userProfile.id = "userProfile";
+        welcomeDiv.appendChild(userProfile);
         welcomeDiv.style.textAlign = "left";
     } else {
+        // Check which header to show
+        // Either the welcome or welcomeBack one
         isFound = userExists();
         if (!isFound) {
             createUser();
@@ -77,9 +84,11 @@ if (userName != "" && userName != null) {
     // The session storage used to check if the user open the page before or not
     // If it's not the first time, display login link and hide the header
     let welcomeVisitor = sessionStorage.getItem("Welcome, visitor");
-    if (welcomeBack == null && welcome == null && welcomeVisitor != null) {
+    if (welcomeBack === null && welcome === null && welcomeVisitor !== null) {
         welcomeHeader.style.display = "none";
         welcomeDiv.style.textAlign = "left";
+    } else if (welcomeBack !== null || welcome !== null) {
+        loginLink.style.display = "none";
     }
 
     // Set the current header as visited before.

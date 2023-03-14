@@ -1,4 +1,4 @@
-h1 {
+h1, h2, h3 {
     color: rgb(179, 13, 13);
 }
 
@@ -14,19 +14,8 @@ body {
     color: crimson;
     padding: 10px;
 }
-/* 
-#welcome_body {
-    padding-left: 0px;
-}
 
-.welcome {
-    padding: 20px;
-}
 
-.background {
-    padding: 40px;
-    background-color: #2e1717;
-} */
 
 hr {
     color: crimson;

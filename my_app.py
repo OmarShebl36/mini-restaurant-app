@@ -67,3 +67,13 @@ def restaurant():
 @app.route('/checkout')
 def checkout():
     return flask.render_template('checkout.html', items=clicked_restaurant.menu)
+
+# Route to success page
+@app.route('/success')
+def success():
+    return flask.render_template('success.html')
+
+# Route to fail page
+@app.route('/fail')
+def fail():
+    return flask.render_template('fail.html')
