@@ -65,12 +65,11 @@ function decrease(itemId) {
     }
 }
 
-// The following code is written with the help of ChatGPT
-// It clears the selected items from the session storage when the user leaves the page
-// window.addEventListener('beforeunload', function() {
-//         for (let i = 0, n = parseInt(sessionStorage.getItem("highestId")); i <= n; i++) {
-//             if (sessionStorage.getItem(`${i}_selected_counter`)) {
-//                 sessionStorage.removeItem(`${i}_selected_counter`);
-//             }
-//         }
-// });
+let submitForm = document.getElementById("submit_items_form")
+submitForm.addEventListener('click', () => {
+    if (sessionStorage.getItem("highestId") === null) {
+        submitForm.action = "/fail";
+    } else {
+        submitForm.action = "/checkout";
+    }
+});

@@ -12,20 +12,22 @@ const welcomeDiv = document.getElementById("welcomeDiv");
 const welcomeHeader = document.getElementById("welcomeHeader");
 
 // Store the welcoming messages
-let welcomeBack = sessionStorage.getItem("Welcome back, " + userName);
-let welcome = sessionStorage.getItem("Welcome, " + userName);
-
+let welcomeBack = sessionStorage.getItem(`Welcome back, ${userName}`);
+let welcome = sessionStorage.getItem(`Welcome, ${userName}`);
 
 // Get restaurant images' elements
 const images = document.getElementsByClassName("restaurant_image");
 
+if (document.getElementById("login_link") !== null) {
+    let loginLink = document.getElementById("login_link");
+}
 
 // Functions
 // Add new userName to the local storage and display welcome message
 function createUser() {
     id = localStorage.length;
     localStorage.setItem(id.toString(), userName);
-    welcomeHeader.innerText = "Welcome " + userName;
+    welcomeHeader.innerText = `Welcome, ${userName}`;
     sessionStorage.setItem(welcomeHeader.innerText, true);
 }
 
@@ -33,7 +35,7 @@ function createUser() {
 function userExists() {
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.getItem(i.toString()) == userName) {
-            welcomeHeader.innerText = "Welcome back, " + userName;
+            welcomeHeader.innerText = `Welcome back, ${userName}`;
             sessionStorage.setItem(welcomeHeader.innerText, true);
             return true;
         }
@@ -54,43 +56,42 @@ function submitForm(imageId) {
 }
 
 // Implementations
-// Create local storage or display user found function if it's the first time to visit the home page
-if (userName !== "" && userName !== null) {
-    // If the user came back to home page show his name in the top left
-    if (welcomeBack !== null || welcome !== null) {
-        welcomeHeader.style.display = "none";
-        const userProfile = document.createElement("h3");
-        userProfile.innerText = userName;
-        userProfile.id = "userProfile";
-        welcomeDiv.appendChild(userProfile);
-        welcomeDiv.style.textAlign = "left";
+if ((userName === "" || userName === null)) {
+    // This condition checks if the user didn't enter the username or it's a new session
+    // Display welcome, visitor header and a login link if it's the first time the user opens the page
+    if (sessionStorage.getItem("Welcome, visitor") === null) {
+        welcomeHeader.innerText = "Welcome, visitor";
     } else {
-        // Check which header to show
-        // Either the welcome or welcomeBack one
+        welcomeHeader.style.display = "none";
+    }
+
+    const loginLink = document.createElement("a");
+    loginLink.innerText = "Login";
+    loginLink.href = "/login";
+    loginLink.id = "login_link";
+    welcomeDiv.appendChild(loginLink);
+
+    // Set the current header as visited before.
+    sessionStorage.setItem(welcomeHeader.innerText, true);
+} else {
+    
+    // Hide the login link
+    loginLink.style.display = "none";
+
+    if (welcomeBack == null && welcome == null) {
+        // Show welcoming header either it's a new user or an old one
         isFound = userExists();
         if (!isFound) {
             createUser();
         }
-    } 
-} else if (userName === "" || userName === null) {
-    // This condition checks the user didn't enter the username or opened for the home page directly
-    // Display welcome, visitor header and a login link if it's the first time the user opens the page
-    welcomeHeader.innerText = "Welcome, visitor";
-    const loginLink = document.createElement("a");
-    loginLink.innerText = "Login";
-    loginLink.href = "/login";
-    welcomeDiv.appendChild(loginLink);
-
-    // The session storage used to check if the user open the page before or not
-    // If it's not the first time, display login link and hide the header
-    let welcomeVisitor = sessionStorage.getItem("Welcome, visitor");
-    if (welcomeBack === null && welcome === null && welcomeVisitor !== null) {
-        welcomeHeader.style.display = "none";
-        welcomeDiv.style.textAlign = "left";
-    } else if (welcomeBack !== null || welcome !== null) {
-        loginLink.style.display = "none";
     }
-
-    // Set the current header as visited before.
-    sessionStorage.setItem(welcomeHeader.innerText, true);
-}
+    // Show the username as a profile in the left if it's the first time the user opens the home page after entering his name
+    if (welcomeBack != null || welcome != null) {
+        const userProfile = document.createElement("h3");
+        welcomeHeader.style.display = "none";
+        userProfile.innerText = userName;
+        userProfile.id = "userProfile";
+        welcomeDiv.appendChild(userProfile);
+        welcomeDiv.style.textAlign = "left";
+    }
+} 

@@ -13,15 +13,8 @@ def create_restaurants_images():
     # Give the restaurant images class name to work with it in JS scripts
     class_name = "restaurant_image"
     for restaurant in restaurants:
-        
-        # Controls the display of the images.
-        # We added 1 to the id as the ids starts with 0.
-        if (int(restaurant.id) + 1) % 5 == 0:
-            
-            # After diplaying 4 images, create a new line.
-            restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} alt={restaurant.name} width="200" height="200" onclick=submitForm({restaurant.id})><br>'
-        else:
-            restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} alt={restaurant.name} width="200" height="200" onclick=submitForm({restaurant.id})>'
+        restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} alt={restaurant.name} width="200" height="200" onclick=submitForm({restaurant.id})>'
+    
     return restaurants_images
 
 # Routes

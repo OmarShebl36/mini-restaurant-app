@@ -8,14 +8,19 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body id="checkout_body">
-    <h1>Checkout</h1>
-    <h2>Selected Items: </h2>
+    <h1 class="checkout_title">Checkout</h1>
+    <h2 class="selected_items_title">Selected Items: </h2>
     <div id="checkout_items">
         
     </div>
-    <form id="checkout_form"> 
-        <input type="submit" id="submit_checkout" placeholder="Name" value="Pay by Cash">
-    </form>
+    <div id="total_div">
+        <hr class="checkout_hr">
+        <h1 class="total_title">Total</h1>
+        <h3 id="total_price" class="total_price"></h3>
+        <form id="checkout_form"> 
+            <input type="submit" id="submit_checkout" class="submit" value="Pay by Cash">
+        </form>
+    </div>
     <script src="static/checkout.js"></script>
 </body>
 </html>
