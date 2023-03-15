@@ -1,3 +1,5 @@
+# Some of the code and comments used in this project are added with the help of ChatGPT
+
 # Import necessary modules
 import flask
 from restaurant_model import Restaurant 
