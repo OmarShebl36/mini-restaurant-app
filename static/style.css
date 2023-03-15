@@ -1,3 +1,4 @@
+/* This file is written with the help of ChatGPT */
 body {
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
@@ -15,7 +16,7 @@ body {
     align-items: center;
     margin-top: 15%;
     margin-bottom: 15%;
-    padding: 10%;
+    padding: 5%;
 }
   
 #loginBodyDiv,
