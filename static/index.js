@@ -1,9 +1,16 @@
+/*
+This code initializes some variables, gets the username from the URL, and sets up some HTML elements to display the welcome messages and restaurant images.
+It then checks if the user is logged in by looking for their username in the browser's local storage.
+If the user is not logged in, it displays a welcome message to the visitor and provides a login link.
+If the user is logged in, it displays a welcome message to the user and their profile name in the left corner of the screen.
+*/
+
 // Setup
 let id = 0;
 let isFound = false;
 let restaurantId = 0;
 
-// Get userName parameter value
+// Get userName parameter value from the URL
 const urlParams = new URL(window.location.toString()).searchParams;
 const userName = urlParams.get("username");
 
@@ -11,33 +18,49 @@ const userName = urlParams.get("username");
 const welcomeDiv = document.getElementById("welcomeDiv");
 const welcomeHeader = document.getElementById("welcomeHeader");
 
-// Store the welcoming messages
+// Get the welcoming messages from session storage
 let welcomeBack = sessionStorage.getItem(`Welcome back, ${userName}`);
 let welcome = sessionStorage.getItem(`Welcome, ${userName}`);
 
 // Get restaurant images' elements
 const images = document.getElementsByClassName("restaurant_image");
-let loginLink;
 
+// Check if the login link element exists in the HTML
+let loginLink;
 if (document.getElementById("login_link") !== null) {
     loginLink = document.getElementById("login_link");
 }
 
 // Functions
+
 // Add new userName to the local storage and display welcome message
 function createUser() {
     id = localStorage.length;
+
+    // Adds user name to the local storage
     localStorage.setItem(id.toString(), userName);
+    
+    // Set the welcome header text to welcome the user
     welcomeHeader.innerText = `Welcome, ${userName}`;
+
+     // Set the welcome message as visited in session storage
     sessionStorage.setItem(welcomeHeader.innerText, true);
 }
 
 // Display welcome back message
 function userExists() {
+
+    // Check if the username exists in the browser's local storage
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.getItem(i.toString()) == userName) {
+            
+            // Set the welcome header text to welcome back the user
             welcomeHeader.innerText = `Welcome back, ${userName}`;
+
+             // Set the welcome back message as visited in session storage
             sessionStorage.setItem(welcomeHeader.innerText, true);
+
+            // Return true if the user is found
             return true;
         }
     }
@@ -46,11 +69,19 @@ function userExists() {
 // When an image is clicked, go to its restaurant.
 // The reload is required to find the elements when going back to the page.
 function submitForm(imageId) {
+    
+     // Reload the page to find the form elements
     window.location.reload();
     let myForm = document.getElementById("myForm");
     let imageIdField = document.getElementById("imageId");
+
+    // Hide the form
     myForm.style.display = "none";
+
+    // Set the name of the hidden field to restaurant_id
     imageIdField.name = "restaurant_id";
+
+    // Set the value of the hidden field to the imageId parameter
     imageIdField.value = imageId;
     myForm.id = "restaurantForm";
     myForm.submit();
@@ -59,7 +90,11 @@ function submitForm(imageId) {
 // Create the user name profile
 function userFoundFun (userName) {
     const userProfile = document.createElement("h3");
+
+         // Hide the welcome header
         welcomeHeader.style.display = "none";
+
+        // Set the text of the user profile to the username
         userProfile.innerText = userName;
         userProfile.id = "userProfile";
         welcomeDiv.appendChild(userProfile);

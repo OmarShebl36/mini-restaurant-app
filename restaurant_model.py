@@ -14,6 +14,10 @@ class Restaurant:
     # This code is written with the help of the documentation
     @staticmethod
     def read_restaurants():
+        """
+        Reads restaurants from the csv file.
+        Returns A list of Restaurant objects.
+        """
         with open("static/csv_files/restaurants.csv", newline='') as f:
             reader = csv.DictReader(f)
             restaurants = []
@@ -29,6 +33,10 @@ class Restaurant:
     
     # Get the restaurant's menu items
     def get_menu_items(self):
+        """
+        Reads the menu items from the csv file and adds the menu items
+        to the restaurant's menu list.
+        """
         self.menu.clear()
         with open("static/csv_files/menu_items.csv", newline='') as f:
             reader = csv.DictReader(f)
@@ -44,8 +52,9 @@ class Restaurant:
                         )
      
 # Add the object to the restaurant csv file 
-# This code is written with the help of the documentation and chatgpt  
+# This code is written with the help of the documentation and ChatGPT  
 def add_to_file(restaurant):
+    # Adds a restaurant object to the restaurants.csv file.
     field_names = ["name", "img_src", "id", "menu"]
     # Check if the restaurant is already in the file
     try:
@@ -53,11 +62,12 @@ def add_to_file(restaurant):
             csv_reader = csv.DictReader(f, fieldnames=field_names)
             for row in csv_reader:
                 if row['name'] == restaurant.name:
-                    return
+                    # If restaurant is already in file, do not add again
+                    return 
     except FileNotFoundError:
         print("File not found")
 
-    # Add the restaurant
+    # Add the restaurant to the file
     with open("static/csv_files/restaurants.csv", 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
@@ -65,13 +75,16 @@ def add_to_file(restaurant):
             'name' : restaurant.name,
             'img_src' : restaurant.img_src,
             'id'   : restaurant.id,
-            'menu' : restaurant.menu
+            'menu' : restaurant.menu # This will be empty until get_menu_items() is called
         })
 
 # Create a restaurant
 def add_new_restaurant(name, img_src):
+    # Creates a new restaurant object and adds it to the csv file using add_to_file()
     restaurants = Restaurant.read_restaurants()
-    id = len(restaurants)
+     # Sets id to be the next integer after the number of existing restaurants
+    id = len(restaurants) 
     new_restaurant = Restaurant(name=name, img_src=img_src)
     new_restaurant.id = id
+    # Adds the restaurant to the csv file
     add_to_file(new_restaurant)

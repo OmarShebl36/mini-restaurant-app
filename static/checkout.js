@@ -1,9 +1,21 @@
 // Setup
+
+// 'n' keeps track of the highest item ID stored in the session storage
 let n = sessionStorage.getItem("highestId") !== null ? sessionStorage.getItem("highestId") : -1;
+
+// 'checkoutItems' is the HTML element that displays the list of items in the checkout menu
 const checkoutItems = document.getElementById("checkout_items");
+
+// 'submitCheckout' is the HTML element of the submit button for checkout
 const submitCheckout = document.getElementById("submit_checkout");
+
+// 'checkoutForm' is the HTML element of the checkout form
 const checkoutForm = document.getElementById("checkout_form");
+
+// 'totalPrice' is the HTML element that displays the total price of the order
 const totalPrice = document.getElementById("total_price");
+
+// 'total' keeps track of the total price of the order
 let total = 0;
 
 // Implementaion
@@ -38,6 +50,7 @@ for (let i = 0; i <= n; i++) {
 }
 
 // Displays the total of the order
+// If there are items in the checkout menu, the total is displayed; otherwise, the total div is hidden
 if (total > 0) {
     totalPrice.innerText = total.toFixed(2);
 } else {

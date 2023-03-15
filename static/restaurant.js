@@ -1,5 +1,7 @@
 // Functions
-// Increase the item counter.
+
+// This function increases the selected counter of an item and saves its data in the session storage.
+// It also updates the highest item id used in the session storage.
 function increase(itemId) {
 
     // Gets the highest item id we used in the session storage
@@ -25,7 +27,11 @@ function increase(itemId) {
     sessionStorage.setItem(`${itemId}_restaurant_name`, selectedRestarantName.innerText);
 }
 
-// Decrease the item counter, if it's not zero.
+/* 
+This function decreases the selected counter of an item if it's not zero.
+If the selected counter becomes zero, it removes the item's data from the session storage.
+It also updates the highest item id used in the session storage.
+*/
 function decrease(itemId) {
 
     let selectedItemCounter = document.getElementById(`${itemId}_selected_counter`);
@@ -37,7 +43,8 @@ function decrease(itemId) {
             sessionStorage.setItem(`${itemId}_selected_counter`, value.toString());
         }
         else if (sessionStorage.getItem(`${itemId}_selected_counter`) !== null && value == 0) {
-            
+
+            // If the selected counter becomes zero, remove the item's data from the session storage
             sessionStorage.removeItem(`${itemId}_selected_counter`);
             sessionStorage.removeItem(`${itemId}_name`);
             sessionStorage.removeItem(`${itemId}_price`);
@@ -65,6 +72,11 @@ function decrease(itemId) {
     }
 }
 
+/*
+This code adds an event listener to the submit button of the form.
+If no item has been selected, it sets the form action to "/fail".
+If there are selected items, it sets the form action to "/checkout".
+*/
 let submitForm = document.getElementById("submit_items_form")
 submitForm.addEventListener('click', () => {
     if (sessionStorage.getItem("highestId") === null) {

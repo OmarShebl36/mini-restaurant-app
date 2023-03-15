@@ -3,7 +3,6 @@ import restaurant_model
     
 class Menu_item:
     
-    # selected_counter is used to determine the number of times the item is selected
     def __init__(self, name, price, restaurant_name, id=0):
         self.name = name
         self.id = id
@@ -24,7 +23,7 @@ def add_to_file(name, price, restaurant_name, id,):
     except:
         print("File not found")
 
-    # If not add it to the file
+    # If not add, it to the file
     with open('static/csv_files/menu_items.csv', 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
@@ -39,17 +38,20 @@ def add_to_file(name, price, restaurant_name, id,):
 def add_menu_item(name, price, restaurant):
     counter = 0
     
-    # Counts the number of items to give a different id
     try:
         with open("static/csv_files/menu_items.csv", newline='') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 if row['name']:
+                    # Count the number of items in the file
                     counter += 1
     except:
+        # Set the counter to 0
         counter = 0
         print("File not found")
     
+    # Give the item an ID based on the number of items found
     id = counter
     new_menu_item = Menu_item(name, price, restaurant.name, id)
+    # Adds item to the file
     add_to_file(name=name, price=price, restaurant_name=restaurant.name, id=id)
