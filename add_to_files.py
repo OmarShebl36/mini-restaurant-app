@@ -48,6 +48,7 @@ while True:
             # Get menu item name and price
             menu_item_name = input("Menu item name: ")
             try:
+                
                 menu_item_price = float(input("Menu item price: "))
                 # Print list of restaurants to choose from
                 print("Which restaurant do you want to add the menu item to? ")
@@ -56,18 +57,20 @@ while True:
                     for line in reader:
                         print(f"Choose {line['id']} for adding to {line['name']}")
                 # Get user's choice of restaurant and add the menu item to it
-                choice = input("")
-                for res in restaurant_model.Restaurant.read_restaurants():
-                    if res.id == choice:
+                choice = int(input(""))
+                restaurants = restaurant_model.Restaurant.read_restaurants()
+                for res in restaurants:
+                    if choice > len(restaurants) - 1:
+                        raise Exception("Could not find the restaurant id you choose!")
+                    elif int(res.id) == choice:
                         restaurant = res
-                menu_item_model.add_menu_item(
-                    restaurant=restaurant,
-                    name=menu_item_name,
-                    price=menu_item_price,
-                )
-            except:
-                # If user enters a non-numeric value for menu item price, prompt the user to try again
-                print("Invalid value! Please use numbers for the menu item prices.")
+                        menu_item_model.add_menu_item(
+                            restaurant=restaurant,
+                            name=menu_item_name,
+                            price=menu_item_price,
+                        )
+            except Exception as e:
+                print(e)
                 continue
         # User wants to quit the app
         case 'q':
