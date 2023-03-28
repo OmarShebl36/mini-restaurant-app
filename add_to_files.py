@@ -14,7 +14,7 @@ menu_item_name = ''
 menu_item_price = 0
 stay = True
 
-# Print list of restaurants to choose from
+# Print list of restaurants with their ids to choose from
 def show_restaurants():
     print("Which restaurant do you want to update its menu items? ")
     with open('static/csv_files/restaurants.csv', newline='') as f:
@@ -22,7 +22,7 @@ def show_restaurants():
         for line in reader:
             print(f"Choose {line['id']} for adding to {line['name']}")
 
-# Updates the price of the item with the given id
+# Updates the price of the item with the given id or delete based on the selected action
 def update_or_del_menu_item(id, price, action):
     try:
         with open('static/csv_files/menu_items.csv',mode='r' ,newline='') as f:
@@ -34,22 +34,26 @@ def update_or_del_menu_item(id, price, action):
                         line['price'] = str(price)
                         print("Item updated successfully!")
                     else:
+                        # If the action is delete, pass the item to delete it
                         continue
+                # Save the updated menu
                 updated_rows.append(line)
 
         with open('static/csv_files/menu_items.csv', mode='w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=['name', 'price', 'restaurant_name', 'id'])
             writer.writeheader()
 
+            # Write the updated menu
             for line in updated_rows:
                 writer.writerow(line)
     except Exception as e:
         print(e)
 
-# Choose which menu item to update from items list
+# Choose which menu item to update or delete from the menu
 def choose_and_show_menu(restaurant, action):
     try:
         menu = []
+        # Show the menu
         print("Choose the menu item's id to perform the action on: ")
         with open('static/csv_files/menu_items.csv', newline='') as f:
             reader = csv.DictReader(f)
@@ -57,14 +61,16 @@ def choose_and_show_menu(restaurant, action):
                 if line['restaurant_name'] == restaurant:
                     menu.append(int(line['id']))
                     print(f"Choose {line['id']} for editing {line['name']}'s price")
-        # Get user's choice of restaurant and add the menu item to it
+        # Get user's choice and validate it
         choice = int(input(""))
         if choice > max(menu) or choice < 0:
             raise Exception("Could not find the item id you choose!")
         for item in menu:
+            # Update the item's price if the action selected is updated
             if int(item) == choice and action == "update":
                 new_price = float(input("Enter the new price for the item: "))
                 update_or_del_menu_item(choice, new_price, action)    
+            # Else delete the item from the menu
             else:
                 update_or_del_menu_item(choice, 0 , action)    
 
@@ -128,15 +134,17 @@ while True:
             try:
                 chosen_restaurant = ""
                 show_restaurants()
-                # Get user's choice of restaurant and update its price
+                # Get user's choice of restaurant
                 choice = int(input(""))
                 restaurants = restaurant_model.Restaurant.read_restaurants()
+                # Validate the input
                 if choice > len(restaurants) - 1 or choice < 0:
                     raise Exception("Could not find the restaurant id you choose!")
                 else:
                     for res in restaurants:
                         if int(res.id) == choice:
                             chosen_restaurant = res.name
+                # Update an item in the chosen restaurant menu
                 choose_and_show_menu(chosen_restaurant, "update")
                 continue
 

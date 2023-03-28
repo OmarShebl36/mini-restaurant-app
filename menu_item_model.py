@@ -1,8 +1,7 @@
 import csv
 import restaurant_model
-    
+
 class Menu_item:
-    
     def __init__(self, name, price, restaurant_name, id=0):
         self.name = name
         self.id = id
@@ -37,18 +36,25 @@ def add_to_file(name, price, restaurant_name, id,):
 # Add new menu_item
 def add_menu_item(name, price, restaurant):
     counter = 0
+    ids = []
     
     try:
+        # Get the ids from the file and sort them to know if there are any missing ids in the middle
+        # Give the new item the missing id or a new one
         with open("static/csv_files/menu_items.csv", newline='') as f:
             reader = csv.DictReader(f)
-            for row in reader:
-                if row['name']:
-                    # Count the number of items in the file
+            for line in reader:
+                ids.append(int(line['id']))
+            ids.sort()
+            for i in range(len(ids)):
+                if counter != ids[counter]:
+                    break
+                else:
                     counter += 1
-    except:
+    except Exception as e:
         # Set the counter to 0
         counter = 0
-        print("File not found")
+        print(e)
     
     # Give the item an ID based on the number of items found
     id = counter
