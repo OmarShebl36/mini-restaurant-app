@@ -1,5 +1,4 @@
 name,price,restaurant_name,id
-Salad,30.0,Mcdonalds,0
 Salad,30.0,Buffalo,1
 Chicken,30.0,Mcdonalds,2
 Salad,30.0,KFC,4
@@ -8,3 +7,4 @@ Mac and Cheese,30.0,Country_Hills,6
 Ice cream,10.0,Mcdonalds,8
 Salad,35.0,Country_Hills,3
 Fried Chicken,50.0,KFC,7
+Salad,20.0,Mcdonalds,0

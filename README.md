@@ -28,7 +28,7 @@ only flask
 - [x] It contains at least one class written by you that has both properties and methods. This includes instantiating the class and using the methods in your app. Please provide below the file name and the line number(s) of at least one example of a class definition in your code as well as the names of two properties and two methods.
   - File name: restaurant_model.py, menu_item_model.py
   - Line number(s): 5, 4
-  - Name of two properties: Restaurant(name, img_src), Menu_item(price, id)
+  - Name of two properties: Restaurant(name, img_src), MenuItem(price, id)
   - Name of two methods: Restaurant(read_restaurants, get_menu_items)
 - [x] It makes use of JavaScript in the front end and uses the localStorage of the web browser.
 - [x] It uses modern JavaScript (for example, let and const rather than var).

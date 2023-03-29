@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
-    <link rel="stylesheet" href="static/style.css">
-</head>
-<body id="index_body">
+    <link rel="stylesheet" href="static\style.css" />
+  </head>
+  <body id="index_body">
     <div id="main">
-        <div id="welcomeDiv">
-            <h1 id="welcomeHeader"></h1>
-            <br>
-        </div>
-        <h3 id="ques_header">Which restarant do you want to pick today?</h3>
-        <div class="restaurantsDiv">
-            <form action="/restaurant" method="get" id="myForm">
-                <input type="hidden" id="imageId">
-            </form>
-$$RES$$
-        </div>
+      <div id="welcomeDiv">
+        <h1 id="welcomeHeader"></h1>
+        <br />
+      </div>
+      <h3 id="ques_header">Which restarant do you want to pick today?</h3>
+      <div class="restaurantsDiv">
+        <form action="/restaurant" method="get" id="myForm">
+          <input type="hidden" id="imageId" />
+        </form>
+        {% for res in restaurants %}
+            <img
+            src="{{res.img_src}}"
+            class="restaurant_image"
+            id="{{res.id}}"
+            alt="{{res.name}}"
+            width="200"
+            height="200"
+            onclick="submitForm({{res.id}})"/>
+        {% endfor %}
+      </div>
     </div>
-    <script src="static/index.js"></script>
-</body>
+    <script src="static\index.js"></script>
+  </body>
 </html>

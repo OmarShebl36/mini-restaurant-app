@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{restarant}}</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static\style.css">
 </head>
 <body id="restaurant_body">
     <h1 id="selected_restarant_name_header">
@@ -27,19 +27,6 @@
             <input type="submit" id="submit_selected_items" value="Go to Checkout">
         </form>
     </div>
-    <script>
-        // When the page gets opened clear the selected items found in the session storage
-        let highest = sessionStorage.getItem("highestId") !== null ? sessionStorage.getItem("highestId") : -1;
-        for (let i = 0; i <= highest; i++) {
-            if (sessionStorage.getItem(`${i}_selected_counter`)!== null) {
-                sessionStorage.removeItem(`${i}_selected_counter`);
-                sessionStorage.removeItem(`${i}_name`);
-                sessionStorage.removeItem(`${i}_price`);
-                sessionStorage.removeItem(`${i}_restaurant_name`);
-            }
-        }
-        sessionStorage.removeItem("highestId");
-    </script>
-    <script src="static/restaurant.js"></script>
+    <script src="static\restaurant.js"></script>
 </body>
 </html>

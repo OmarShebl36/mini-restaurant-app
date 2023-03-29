@@ -1,6 +1,7 @@
 import restaurant_model
 import menu_item_model
 import csv
+import os
 
 """
 This app is made for a development purpose.
@@ -17,7 +18,7 @@ stay = True
 # Print list of restaurants with their ids to choose from
 def show_restaurants():
     print("Which restaurant do you want to update its menu items? ")
-    with open('static/csv_files/restaurants.csv', newline='') as f:
+    with open(os.path.abspath('static\\csv_files\\restaurants.csv'), newline='') as f:
         reader = csv.DictReader(f)
         for line in reader:
             print(f"Choose {line['id']} for adding to {line['name']}")
@@ -25,7 +26,7 @@ def show_restaurants():
 # Updates the price of the item with the given id or delete based on the selected action
 def update_or_del_menu_item(id, price, action):
     try:
-        with open('static/csv_files/menu_items.csv',mode='r' ,newline='') as f:
+        with open(os.path.abspath('static\\csv_files\\menu_items.csv'),mode='r' ,newline='') as f:
             reader = csv.DictReader(f)
             updated_rows = []
             for line in reader:
@@ -39,7 +40,7 @@ def update_or_del_menu_item(id, price, action):
                 # Save the updated menu
                 updated_rows.append(line)
 
-        with open('static/csv_files/menu_items.csv', mode='w', newline='') as f:
+        with open(os.path.abspath('static\\csv_files\\menu_items.csv'), mode='w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=['name', 'price', 'restaurant_name', 'id'])
             writer.writeheader()
 
@@ -55,7 +56,7 @@ def choose_and_show_menu(restaurant, action):
         menu = []
         # Show the menu
         print("Choose the menu item's id to perform the action on: ")
-        with open('static/csv_files/menu_items.csv', newline='') as f:
+        with open(os.path.abspath('static\\csv_files\\menu_items.csv'), newline='') as f:
             reader = csv.DictReader(f)
             for line in reader:
                 if line['restaurant_name'] == restaurant:
@@ -90,10 +91,10 @@ while True:
             restaurant_name = input("Restaurant name: ")
             restaurant_img_name = input("Restaurant img name: ")
             # Construct image src from input
-            restaurant_img_name = f"static/images/{restaurant_img_name}"
+            restaurant_img_name = os.path.abspath(f"static/images/{restaurant_img_name}")
             try:
                 # Check if image file exists
-                open(restaurant_img_name)           
+                file = open(restaurant_img_name)           
                 # Create a restaurant instance
                 restaurant = restaurant_model.Restaurant(restaurant_name, restaurant_img_name)
                 # Get the menu items of the new restaurant
@@ -103,6 +104,7 @@ while True:
                     name=restaurant_name,
                     img_src=restaurant_img_name,
                 )
+                file.close()
             except:
                 # If the image file does not exist, prompt the user to try again
                 print("The image is not available. Please try another.")

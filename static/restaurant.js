@@ -1,3 +1,15 @@
+// When the page gets opened clear the selected items found in the session storage
+let highest = sessionStorage.getItem("highestId") !== null ? sessionStorage.getItem("highestId") : -1;
+for (let i = 0; i <= highest; i++) {
+    if (sessionStorage.getItem(`${i}_selected_counter`)!== null) {
+        sessionStorage.removeItem(`${i}_selected_counter`);
+        sessionStorage.removeItem(`${i}_name`);
+        sessionStorage.removeItem(`${i}_price`);
+        sessionStorage.removeItem(`${i}_restaurant_name`);
+    }
+}
+sessionStorage.removeItem("highestId");
+
 // Functions
 
 // This function increases the selected counter of an item and saves its data in the session storage.
@@ -80,8 +92,8 @@ If there are selected items, it sets the form action to "/checkout".
 let submitForm = document.getElementById("submit_items_form")
 submitForm.addEventListener('click', () => {
     if (sessionStorage.getItem("highestId") === null) {
-        submitForm.action = "/fail";
+        submitForm.action = "\\fail";
     } else {
-        submitForm.action = "/checkout";
+        submitForm.action = "\\checkout";
     }
 });

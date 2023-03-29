@@ -1,5 +1,7 @@
 import csv
-from menu_item_model import Menu_item
+import logging
+import os
+from menu_item_model import MenuItem
 
 # Setup
 class Restaurant:
@@ -18,7 +20,7 @@ class Restaurant:
         Reads restaurants from the csv file.
         Returns A list of Restaurant objects.
         """
-        with open("static/csv_files/restaurants.csv", newline='') as f:
+        with open(os.path.abspath("static\\csv_files\\restaurants.csv"), newline='') as f:
             reader = csv.DictReader(f)
             restaurants = []
             for row in reader:
@@ -38,12 +40,12 @@ class Restaurant:
         to the restaurant's menu list.
         """
         self.menu.clear()
-        with open("static/csv_files/menu_items.csv", newline='') as f:
+        with open(os.path.abspath("static\\csv_files\\menu_items.csv"), newline='') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 if row['restaurant_name'] == self.name:
                     self.menu.append(
-                        Menu_item(
+                        MenuItem(
                             name=row['name'],
                             price=row['price'],
                             restaurant_name=row['restaurant_name'],
@@ -58,17 +60,17 @@ def add_to_file(restaurant):
     field_names = ["name", "img_src", "id", "menu"]
     # Check if the restaurant is already in the file
     try:
-        with open("static/csv_files/restaurants.csv", 'r', newline='') as f:
+        with open(os.path.abspath("static\\csv_files\\restaurants.csv"), 'r', newline='') as f:
             csv_reader = csv.DictReader(f, fieldnames=field_names)
             for row in csv_reader:
                 if row['name'] == restaurant.name:
                     # If restaurant is already in file, do not add again
                     return 
-    except FileNotFoundError:
-        print("File not found")
+    except Exception as e:
+        logging.error(e)
 
     # Add the restaurant to the file
-    with open("static/csv_files/restaurants.csv", 'a', newline='') as f:
+    with open(os.path.abspath("static\\csv_files\\restaurants.csv"), 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
         {

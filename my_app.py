@@ -2,6 +2,8 @@
 
 # Import necessary modules
 import flask
+import logging
+import os
 from restaurant_model import Restaurant 
 
 # Setup Flask application
@@ -9,21 +11,7 @@ app = flask.Flask("my_app")
 # Load restaurant data
 restaurants = Restaurant.read_restaurants()
 
-# Functions
-
-# Create HTML for restaurant images
-def create_restaurants_images():
-    restaurants_images = ''
-    # Set class name for restaurant images
-    class_name = "restaurant_image"
-    # Loop through each restaurant and add an HTML image tag with restaurant data
-    for restaurant in restaurants:
-        restaurants_images += f'<img src={restaurant.img_src} class={class_name} id={restaurant.id} alt={restaurant.name} width="200" height="200" onclick=submitForm({restaurant.id})>'
-    # Return the HTML for the restaurant images
-    return restaurants_images
-
 # Routes
-
 # Route to login page
 @app.route("/login")
 def login():
@@ -33,15 +21,14 @@ def login():
 @app.route("/")
 def homepage():
     # Generate HTML for the restaurant images
-    restaurant_imgs = create_restaurants_images()
     content = ''
     try:
-        with open("templates\index.html") as file:
+        with open(os.path.abspath("templates\\index.html")) as file:
             content = file.read()
-    except:
-        print("File not found")
+    except Exception as e:
+        logging.error(e)
     # Replace placeholder string in index.html with the HTML for the restaurant images
-    return content.replace("$$RES$$", restaurant_imgs)
+    return flask.render_template('index.html', restaurants=restaurants)
 
 # Route to restaurant page and show its menu
 @app.route("/restaurant")
