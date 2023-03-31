@@ -18,7 +18,7 @@ stay = True
 # Print list of restaurants with their ids to choose from
 def show_restaurants():
     print("Which restaurant do you want to update its menu items? ")
-    with open(os.path.abspath('static\\csv_files\\restaurants.csv'), newline='') as f:
+    with open(os.path.normcase('static\\csv_files\\restaurants.csv'), newline='') as f:
         reader = csv.DictReader(f)
         for line in reader:
             print(f"Choose {line['id']} for adding to {line['name']}")
@@ -26,7 +26,7 @@ def show_restaurants():
 # Updates the price of the item with the given id or delete based on the selected action
 def update_or_del_menu_item(id, price, action):
     try:
-        with open(os.path.abspath('static\\csv_files\\menu_items.csv'),mode='r' ,newline='') as f:
+        with open(os.path.normcase('static\\csv_files\\menu_items.csv'),mode='r' ,newline='') as f:
             reader = csv.DictReader(f)
             updated_rows = []
             for line in reader:
@@ -40,7 +40,7 @@ def update_or_del_menu_item(id, price, action):
                 # Save the updated menu
                 updated_rows.append(line)
 
-        with open(os.path.abspath('static\\csv_files\\menu_items.csv'), mode='w', newline='') as f:
+        with open(os.path.normcase('static\\csv_files\\menu_items.csv'), mode='w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=['name', 'price', 'restaurant_name', 'id'])
             writer.writeheader()
 
@@ -56,7 +56,7 @@ def choose_and_show_menu(restaurant, action):
         menu = []
         # Show the menu
         print("Choose the menu item's id to perform the action on: ")
-        with open(os.path.abspath('static\\csv_files\\menu_items.csv'), newline='') as f:
+        with open(os.path.normcase('static\\csv_files\\menu_items.csv'), newline='') as f:
             reader = csv.DictReader(f)
             for line in reader:
                 if line['restaurant_name'] == restaurant:
@@ -91,7 +91,7 @@ while True:
             restaurant_name = input("Restaurant name: ")
             restaurant_img_name = input("Restaurant img name: ")
             # Construct image src from input
-            restaurant_img_name = os.path.abspath(f"static/images/{restaurant_img_name}")
+            restaurant_img_name = os.path.normcase(f"static/images/{restaurant_img_name}")
             try:
                 # Check if image file exists
                 file = open(restaurant_img_name)           

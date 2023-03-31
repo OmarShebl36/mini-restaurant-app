@@ -23,7 +23,7 @@ def homepage():
     # Generate HTML for the restaurant images
     content = ''
     try:
-        with open(os.path.abspath("templates\\index.html")) as file:
+        with open(os.path.normcase("templates\\index.html")) as file:
             content = file.read()
     except Exception as e:
         logging.error(e)

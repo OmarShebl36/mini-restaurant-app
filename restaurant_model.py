@@ -20,7 +20,7 @@ class Restaurant:
         Reads restaurants from the csv file.
         Returns A list of Restaurant objects.
         """
-        with open(os.path.abspath("static\\csv_files\\restaurants.csv"), newline='') as f:
+        with open(os.path.normcase("static\\csv_files\\restaurants.csv"), newline='') as f:
             reader = csv.DictReader(f)
             restaurants = []
             for row in reader:
@@ -40,7 +40,7 @@ class Restaurant:
         to the restaurant's menu list.
         """
         self.menu.clear()
-        with open(os.path.abspath("static\\csv_files\\menu_items.csv"), newline='') as f:
+        with open(os.path.normcase("static\\csv_files\\menu_items.csv"), newline='') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 if row['restaurant_name'] == self.name:
@@ -60,7 +60,7 @@ def add_to_file(restaurant):
     field_names = ["name", "img_src", "id", "menu"]
     # Check if the restaurant is already in the file
     try:
-        with open(os.path.abspath("static\\csv_files\\restaurants.csv"), 'r', newline='') as f:
+        with open(os.path.normcase("static\\csv_files\\restaurants.csv"), 'r', newline='') as f:
             csv_reader = csv.DictReader(f, fieldnames=field_names)
             for row in csv_reader:
                 if row['name'] == restaurant.name:
@@ -70,7 +70,7 @@ def add_to_file(restaurant):
         logging.error(e)
 
     # Add the restaurant to the file
-    with open(os.path.abspath("static\\csv_files\\restaurants.csv"), 'a', newline='') as f:
+    with open(os.path.normcase("static\\csv_files\\restaurants.csv"), 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
         {
