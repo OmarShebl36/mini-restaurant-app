@@ -15,7 +15,7 @@ def add_to_file(name, price, restaurant_name, id,):
 
     # Checks if the item is already in the file or not
     try:
-        with open(os.path.normcase('static\\csv_files\\menu_items.csv'), newline='') as f:
+        with open(os.path.normcase('static/csv_files/menu_items.csv'), newline='') as f:
             csv_reader = csv.DictReader(f, fieldnames=field_names)
             for row in csv_reader:
                 if row['name'] == name and row['restaurant_name'] == restaurant_name:
@@ -24,7 +24,7 @@ def add_to_file(name, price, restaurant_name, id,):
         logging.error(e)
 
     # If not add, it to the file
-    with open(os.path.normcase('static\\csv_files\\menu_items.csv'), 'a', newline='') as f:
+    with open(os.path.normcase('static/csv_files/menu_items.csv'), 'a', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=field_names)
         csv_writer.writerow(
             {
@@ -42,7 +42,7 @@ def add_menu_item(name, price, restaurant):
     try:
         # Get the ids from the file and sort them to know if there are any missing ids in the middle
         # Give the new item the missing id or a new one
-        with open(os.path.normcase("static\\csv_files\\menu_items.csv"), newline='') as f:
+        with open(os.path.normcase("static/csv_files/menu_items.csv"), newline='') as f:
             reader = csv.DictReader(f)
             for line in reader:
                 ids.append(int(line['id']))

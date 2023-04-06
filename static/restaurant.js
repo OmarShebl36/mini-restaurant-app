@@ -92,8 +92,8 @@ If there are selected items, it sets the form action to "/checkout".
 let submitForm = document.getElementById("submit_items_form")
 submitForm.addEventListener('click', () => {
     if (sessionStorage.getItem("highestId") === null) {
-        submitForm.action = "\\fail";
+        submitForm.action = "/fail";
     } else {
-        submitForm.action = "\\checkout";
+        submitForm.action = "/checkout";
     }
 });

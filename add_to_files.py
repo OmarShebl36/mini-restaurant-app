@@ -18,7 +18,7 @@ stay = True
 # Print list of restaurants with their ids to choose from
 def show_restaurants():
     print("Which restaurant do you want to update its menu items? ")
-    with open(os.path.normcase('static\\csv_files\\restaurants.csv'), newline='') as f:
+    with open(os.path.normcase('static/csv_files/restaurants.csv'), newline='') as f:
         reader = csv.DictReader(f)
         for line in reader:
             print(f"Choose {line['id']} for adding to {line['name']}")
@@ -26,7 +26,7 @@ def show_restaurants():
 # Updates the price of the item with the given id or delete based on the selected action
 def update_or_del_menu_item(id, price, action):
     try:
-        with open(os.path.normcase('static\\csv_files\\menu_items.csv'),mode='r' ,newline='') as f:
+        with open(os.path.normcase('static/csv_files/menu_items.csv'),mode='r' ,newline='') as f:
             reader = csv.DictReader(f)
             updated_rows = []
             for line in reader:
@@ -40,7 +40,7 @@ def update_or_del_menu_item(id, price, action):
                 # Save the updated menu
                 updated_rows.append(line)
 
-        with open(os.path.normcase('static\\csv_files\\menu_items.csv'), mode='w', newline='') as f:
+        with open(os.path.normcase('static/csv_files/menu_items.csv'), mode='w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=['name', 'price', 'restaurant_name', 'id'])
             writer.writeheader()
 
@@ -56,7 +56,7 @@ def choose_and_show_menu(restaurant, action):
         menu = []
         # Show the menu
         print("Choose the menu item's id to perform the action on: ")
-        with open(os.path.normcase('static\\csv_files\\menu_items.csv'), newline='') as f:
+        with open(os.path.normcase('static/csv_files/menu_items.csv'), newline='') as f:
             reader = csv.DictReader(f)
             for line in reader:
                 if line['restaurant_name'] == restaurant:
@@ -66,14 +66,15 @@ def choose_and_show_menu(restaurant, action):
         choice = int(input(""))
         if choice > max(menu) or choice < 0:
             raise Exception("Could not find the item id you choose!")
-        for item in menu:
-            # Update the item's price if the action selected is updated
-            if int(item) == choice and action == "update":
-                new_price = float(input("Enter the new price for the item: "))
-                update_or_del_menu_item(choice, new_price, action)    
-            # Else delete the item from the menu
-            else:
-                update_or_del_menu_item(choice, 0 , action)    
+        # Update the item's price if the action selected is updated
+        if action == 'update':
+            for item in menu:
+                if item == choice:
+                    new_price = float(input("Enter the new price for the item: "))
+                    update_or_del_menu_item(choice, new_price, action)    
+        # Else delete the item from the menu
+        else:
+            update_or_del_menu_item(choice, 0 , action)    
 
     except Exception as e:
                 print(e)
