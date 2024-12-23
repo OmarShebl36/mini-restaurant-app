@@ -1,6 +1,6 @@
 # MY FINAL PROJECT
-It is a restaurant platform that you can order food from after selecting the restaurant you want to dine in.
 
+It is a restaurant platform that you can order food from after selecting the restaurant you want to dine in.
 
 - What does it do?  
   It has a terminal app called add_to_files.py which is the app the developer can use to add new restaurants and menu items to the database (The CSV files).
@@ -11,13 +11,20 @@ It is a restaurant platform that you can order food from after selecting the res
   Used staticmethod
   Raised error
 
+## How to Run
+
+- Install Python
+- Install Flask
+- Run the app with the command `flask --app my_app run`
 
 ## Prerequisites
-Did you add any additional modules that someone needs to install (for instance anything in Python that you `pip install-ed`)? 
+
+Did you add any additional modules that someone needs to install (for instance anything in Python that you `pip install-ed`)?
 List those here (if any).
 only flask
 
 ## Project Checklist
+
 - [x] It is available on GitHub.
 - [x] It uses the Flask web framework.
 - [x] It uses at least one module from the Python Standard Library other than the random module.
@@ -44,6 +51,6 @@ only flask
 - [x] It lets the user enter a value in a text box at some point.
   This value is received and processed by your back end Python code.
 - [x] It doesn't generate any error message even if the user enters a wrong input.
-- [x] The code follows the code and style conventions as introduced in the course, is fully documented using comments and doesn't contain unused or experimental code. 
+- [x] The code follows the code and style conventions as introduced in the course, is fully documented using comments and doesn't contain unused or experimental code.
   In particular, the code should not use `print()` or `console.log()` for any information the app user should see. Instead, all user feedback needs to be visible in the browser.  
 - [x] All exercises have been completed as per the requirements and pushed to the respective GitHub repository.
